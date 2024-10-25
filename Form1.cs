@@ -82,7 +82,7 @@ namespace checkers
             {
                 var (selectedRow, selectedCol) = selectedPiece.Value;
 
-                // Move the piece if the move is valid (you can add more logic here for validation)
+                
                 game.board[row, col] = game.board[selectedRow, selectedCol];  // Move the piece
                 game.board[selectedRow, selectedCol] = null;  // Clear the old position
 
