@@ -13,105 +13,115 @@ namespace checkers
 
     public partial class Form1 : Form
     {
-        private const int BoardSize = 8;  
-        private const int CellSize = 60;  
-        private Button[,] boardButtons = new Button[BoardSize, BoardSize];
         private CheckersGame game;
+        private Button[,] boardButtons = new Button[8, 8];  
+        private (int row, int col)? selectedPiece;  
 
         public Form1()
         {
             InitializeComponent();
-            InitializeBoard();
             game = new CheckersGame();  
-            RenderBoard();
+            CreateBoardUI();            
+            RenderBoard();              
         }
 
-        private void InitializeBoard()
+        
+        private void CreateBoardUI()
         {
-            this.ClientSize = new Size(BoardSize * CellSize, BoardSize * CellSize);  
-
-            for (int row = 0; row < BoardSize; row++)
+            int tileSize = 50;  
+            for (int row = 0; row < 8; row++)
             {
-                for (int col = 0; col < BoardSize; col++)
+                for (int col = 0; col < 8; col++)
                 {
-                    Button btn = new Button();
-                    btn.Size = new Size(CellSize, CellSize);
-                    btn.Location = new Point(col * CellSize, row * CellSize);
-                    btn.FlatStyle = FlatStyle.Flat;
+                    Button button = new Button
+                    {
+                        Width = tileSize,
+                        Height = tileSize,
+                        FlatStyle = FlatStyle.Flat,
+                        Location = new System.Drawing.Point(col * tileSize, row * tileSize),
+                        Tag = (row, col)  
+                    };
 
                     
-                    if ((row + col) % 2 == 0)
+                    if ((row + col) % 2 == 1)
                     {
-                        btn.BackColor = Color.White;
+                        button.BackColor = Color.Black;
+                        button.ForeColor = Color.White;  
                     }
                     else
                     {
-                        btn.BackColor = Color.Gray;
-                        btn.Click += OnBoardButtonClick;
+                        button.BackColor = Color.White;
+                        button.Enabled = false;  
                     }
 
-                    boardButtons[row, col] = btn;
-                    this.Controls.Add(btn);
+                    
+                    button.Click += OnBoardButtonClick;
+
+                    boardButtons[row, col] = button;
+                    this.Controls.Add(button);  
                 }
             }
         }
 
+        
         private void OnBoardButtonClick(object sender, EventArgs e)
         {
             Button clickedButton = sender as Button;
-            Point boardPos = GetButtonPosition(clickedButton);
+            var (row, col) = ((int row, int col))clickedButton.Tag;  
 
-            
-            HandleMove(boardPos);
-        }
-
-        private Point GetButtonPosition(Button button)
-        {
-            for (int row = 0; row < BoardSize; row++)
+            if (selectedPiece == null)  
             {
-                for (int col = 0; col < BoardSize; col++)
+               
+                if (game.board[row, col] != null)
                 {
-                    if (boardButtons[row, col] == button)
-                    {
-                        return new Point(row, col);
-                    }
+                    selectedPiece = (row, col);  
+                    clickedButton.BackColor = Color.Yellow;  
                 }
             }
-            return Point.Empty;
+            else  
+            {
+                var (selectedRow, selectedCol) = selectedPiece.Value;
+
+                // Move the piece if the move is valid (you can add more logic here for validation)
+                game.board[row, col] = game.board[selectedRow, selectedCol];  // Move the piece
+                game.board[selectedRow, selectedCol] = null;  // Clear the old position
+
+                selectedPiece = null;  
+                RenderBoard();  
+            }
         }
 
-        private void HandleMove(Point boardPos)
-        {
-            
-            RenderBoard();
-        }
-
+       
         private void RenderBoard()
         {
-            
-            var board = game.GetBoard();  
+            var board = game.GetBoard();
 
-            for (int row = 0; row < BoardSize; row++)
+            for (int row = 0; row < 8; row++)
             {
-                for (int col = 0; col < BoardSize; col++)
+                for (int col = 0; col < 8; col++)
                 {
                     var piece = board[row, col];
-
-                    if (piece == null)
+                    if (piece != null)
                     {
-                        boardButtons[row, col].Text = "";
-                    }
-                    else if (piece.IsKing)
-                    {
-                        boardButtons[row, col].Text = piece.Player == 1 ? "K1" : "K2";  
+                        if (piece.Player == 1)
+                            boardButtons[row, col].Text = "P1";  
+                        else if (piece.Player == 2)
+                            boardButtons[row, col].Text = "P2";  
                     }
                     else
                     {
-                        boardButtons[row, col].Text = piece.Player == 1 ? "1" : "2";  
+                        boardButtons[row, col].Text = "";  
+                    }
+
+                    
+                    if ((row + col) % 2 == 1)
+                    {
+                        boardButtons[row, col].BackColor = Color.Black;
                     }
                 }
             }
         }
     }
-    }
+}
+
 
