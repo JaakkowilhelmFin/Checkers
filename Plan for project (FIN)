@@ -1,0 +1,101 @@
+Suunnitelma Tammi-pelistä:
+
+Seuraavassa kuvataan tammi-pelin toteutuksen minimivaatimukset, käytetään olio-ohjelmoinnin periaatteita (OOAD) ja esitellään analyysin ja suunnittelun plussat ja miinukset.
+
+ 
+
+Pelin minimivaatimukset
+
+Peli on yksinkertainen konsolipohjainen sovellus, joka mahdollistaa kahden ihmispelaajan tammi-pelin pelaamisen. Pelin minimivaatimukset ovat seuraavat:
+
+ 
+
+1. Pelin asettelu:
+
+1.      Peli pelataan 8x8-laudalla, jossa vuorottelevat tummat ja vaaleat ruudut.
+
+2.      Kummallakin pelaajalla on 12 nappulaa: pelaajalla 1 (’X’) ja pelaajalla 2 (’O’).
+
+3.      Nappulat asetetaan alussa tummille ruuduille kummankin pelaajan kolmelle ensimmäiselle riville.
+
+4.      Pelaajat liikkuvat vuorotellen laudalla.
+
+2. Pelaajien vuorot:
+
+1.      Pelaaja siirtää yhden nappulan kerrallaan.
+
+2.      Nappuloita voidaan siirtää vain viistosti tyhjille ruuduille.
+
+3.      Pelaaja 1 käyttää ’X’-nappuloita ja pelaaja 2 käyttää ’O’-nappuloita.
+
+4.      Jos nappula pääsee vastustajan laudan päähän, se muuttuu "kuninkaaksi".
+
+3. Nappuloiden kaappaus:
+
+1.      Pelaajan nappula voi hypätä viistosti vastustajan nappulan yli ja kaapata sen, jos hypyn jälkeen on vapaa ruutu.
+
+2.      Useita hyppyjä voi tehdä yhdellä vuorolla, jos ne ovat sallittuja.
+
+4. Voiton ehdot:
+
+1.      Peli päättyy, kun toinen pelaaja kaappaa kaikki vastustajan nappulat tai jos vastustajalla ei ole laillisia siirtoja jäljellä.
+
+2.      Tasapeli tapahtuu, jos kumpikaan pelaaja ei voi tehdä siirtoja tai kaappauksia tietyn siirtomäärän jälkeen.
+
+5. Käyttäjän syöte ja pelinäkymä:
+
+1.      Peli pyytää nykyistä pelaajaa tekemään siirron koordinaattijärjestelmällä, esim. "B 2 C 3".
+
+2.      Peli näyttää pelilaudan jokaisen siirron jälkeen.
+
+3.      Virheellisistä siirroista annetaan virheilmoitus, ja pelaaja saa yrittää uudelleen.
+
+Olio-ohjelmointi (OOAD) – Olioanalyysi ja suunnittelu
+
+Oliopohjainen suunnittelumalli (esimerkki ja alustava suunnitelma)
+
+Luokat:
+
+1.      Peli (Game): Hallinnoi pelin kulkua, pelaajavuoroja ja voittoehtoja.
+
+2.      Lauta (Board): Käsittelee 8x8 pelilautaa, nappuloiden sijainteja ja pelinäkymää.
+
+3.      Nappula (Piece): Edustaa yhtä nappulaa laudalla (normaali tai kuningas).
+
+4.      Pelaaja (Player): Edustaa pelaajaa, jolla on nappuloita ja hallinnoi vuoroja.
+
+5.      Siirto (Move): Kapseloi siirron, mukaan lukien siirrettävän nappulan sijainnin ja määränpään.
+
+6.      Pääkäyttäjä: Molemmat pelaajat.
+
+7.      Edellytykset: Pelilauta on alussa, ja nappulat ovat oikeilla paikoillaan.
+
+8.      Laukaisin: Pelin aloituskomento.
+
+Olio-ohjelmoinnin (OOAD) plussat ja miinukset
+
+Plussat: Modulaarisuus ja uudelleenkäytettävyys:
+
+ 
+
+1.      Luokkia voi käyttää uudelleen eri projekteissa tai myöhemmissä laajennuksissa.
+
+2.     Abstraktio ja kapselointi. Oliot piilottavat monimutkaisuuden.
+
+3.     Parempi yhteistyö kehittäjien välillä.
+
+4.      Laajennettavuus:
+
+5.      Helpompi ylläpito ja virheiden etsintä:
+
+ 
+
+Miinukset:
+
+1.      Oppimiskynnys ja monimutkaisuus. Rakenne voi muuttua liian monimutkaiseksi, jos sitä ei hallita oikein.
+
+2.      Pienimuotoisissa projekteissa täysipainoinen oliopohjainen lähestymistapa voi olla ylimitoitettu ja lisätä tarpeetonta monimutkaisuutta.
+
+3.      Suorituskyvyn heikkeneminen. Oliot voivat joskus hidastaa suorituskykyä, erityisesti suurten tietomäärien käsittelyssä.
+
+4.      Vaikeus tunnistaa oliot.
