@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.Windows.Forms;
 
 namespace checkers
@@ -75,7 +71,7 @@ namespace checkers
 
             if (selectedPiece == null)
             {
-                // Selects a piece if it belongs to the current player
+               
                 if (game.board[row, col] != null && game.board[row, col].Player == game.CurrentPlayer)
                 {
                     selectedPiece = (row, col);
@@ -99,7 +95,7 @@ namespace checkers
                     game.NextTurn();
                     currentPlayerLabel.Text = "Current Player: Player " + game.CurrentPlayer;
 
-                    // Check for winner
+                    
                     int winner = game.CheckForWinner();
                     if (winner != 0)
                     {
@@ -152,7 +148,7 @@ namespace checkers
             return Math.Abs(startRow - endRow) == 1 && Math.Abs(startCol - endCol) == 1;
         }
 
-        // Reset the game 
+        // Alla päivitetään  peli alkuasentoon
         private void ResetGame()
         {
             game = new CheckersGame();
