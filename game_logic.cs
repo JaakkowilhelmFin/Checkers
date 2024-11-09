@@ -64,10 +64,10 @@ namespace checkers
                 }
             }
 
-            if (!player1HasPieces) return 2;  // Player 2 wins if Player 1 has no pieces 
-            if (!player2HasPieces) return 1;  // Player 1 wins if Player 2 has no pieces 
+            if (!player1HasPieces) return 2;   
+            if (!player2HasPieces) return 1;   
 
-            return 0;  // No winner yet
+            return 0;  
         }
     }
 
